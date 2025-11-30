@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-from pybase62 import b62encode
+from base62 import encode as b62encode
 
 
 class Node(models.Model):

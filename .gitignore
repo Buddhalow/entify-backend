@@ -4,3 +4,4 @@ node_modules/
 __pyc__/
 *.tmp
 tmp/
+.env.development

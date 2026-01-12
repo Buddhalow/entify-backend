@@ -1,0 +1,53 @@
+{% extends "hourly/dashboard/base.html" %}
+{% load i18n %}
+{% block bottom_tab_bar %}
+<nav class="bottom-tab-bar hidden sm:visible">
+  <ul class="flex flex-row">
+    <li>
+      <a href="{% url 'creator_overview' creator.slug %}">
+        <i class="ph ph-house"></i>
+        <span>{% trans 'Overview' %}</span>
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'creator_projects' creator.slug %}">
+        <i class="ph ph-house"></i>
+        <span>{% trans 'Projects' %}</span>
+      </a>
+    </li>
+    <li>
+      <a class="btn btn-accent" href="{% url 'track' creator.slug %}">
+        <i class="ph ph-plus-circle"></i>
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'creator_projects' creator.slug %}">
+        <i class="ph ph-house"></i>
+        <span>{% trans 'Reporting' %}</span>
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'creator_projects' creator.slug %}">
+        <i class="ph ph-house"></i>
+        <span>{% trans 'Account' %}</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+{% endblock %}
+{% block menu %}
+<ul class="menu">
+  <li>
+    <a href="{% url 'creator_overview' creator.slug %}">
+      <i class="ph ph-house"></i>
+      <span>{% trans 'Start' %}</span>
+    </a>
+  </li>
+  <li>
+    <a href="{% url 'creator_projects' creator.slug %}">
+      <i class="ph ph-money"></i>
+      <span>{% trans 'Projects' %}</span>
+    </a>
+  </li>
+</ul> 
+{% endblock %}

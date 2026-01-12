@@ -1,4 +1,5 @@
-from rest_framework.viewsets import ModelViewSet, APIView
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
 
 from entify.models import Node
 from .serializers import NodeSerializer

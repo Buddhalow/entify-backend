@@ -1,0 +1,105 @@
+{% load i18n %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <title>Workers panel</title>
+    <style>
+      @view-transition {
+        navigation: auto;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css"
+    />
+    {% block head %}
+    {% endblock %}
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>  
+    <style>
+      :root {
+        --daisy-btn-shadow: none;
+      }
+      tr:hover td {
+        background: rgba(127, 127, 127, .1);
+        cursor: pointer;
+      }
+      body {
+        font-family: DM Sans, serif;
+        font-weight: 400;
+      }
+      .btn:hover {
+        transform: scale(1.01) !important;
+      }
+      .btn:active {
+        transform: scale(0.99) !important;
+        opacity: 0.5 !important;
+      }
+      .btn:focus {
+        outline: 2pt solid black !important;
+        outline-offset: 2pt;
+      }
+      .bottom {
+        position: fixed;
+        width: 100%;
+        height: auto;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .bottom-tab-bar {
+      }
+      .bottom-tab-bar ul {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, .2));
+        box-shadow: 0 5pt 13pt -12pt rgba(0, 0, 0, .5);
+        border-radius: 5pt;
+        justify-content: center;
+      }
+      .bottom-tab-bar li {
+        list-style-type: none;
+      }
+      .bottom-tab-bar ul li {
+        padding: 20pt;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:hover, a:hover {
+        transform: scale(1.1) !important;
+      }
+      button:active {
+        transform: scale(1) !important;
+      }
+    </style>
+    <script>
+      function handleSubmit(event) {
+        var form = event.target
+        var submitButtons = form.querySelectorAll('button[type="submit"]')
+        for (let submitButton of submitButtons) {
+          submitButton.disabled = true
+          submitButton.style.opacity = 0.5
+        }
+      }
+    </script>
+  </head>
+  <body class="[--color-primary:black]">
+    {% block body %}{% endblock %}
+    {% block bottom_tab_bar %}{% endblock %}
+    </div>
+  </body>
+</html>

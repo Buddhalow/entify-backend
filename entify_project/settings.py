@@ -60,6 +60,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_extensions',
+    'rest_framework_api_key',
+    'drf_spectacular',
+    'oauth2_provider',
     'entify'
 ]
 
@@ -138,19 +141,27 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
     ],
     'DEFAULT_PARSER_CLASSES': [
         # Any other parsers
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'JSON_UNDERSCOREIZE': {
         'no_underscore_before_number': True,
     },
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Spacify Entity API',
+    'DESCRIPTION': 'Entity service for Spacify',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
 }
 
 # Static files (CSS, JavaScript, Images)

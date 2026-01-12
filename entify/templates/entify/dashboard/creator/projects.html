@@ -1,0 +1,24 @@
+{% extends "hourly/dashboard/creator/base.html" %}
+{% load i18n %}
+{% block page %}
+<h3 class="m-3 text-xl">Projects <a href="{% url 'create_project' creator.slug %}" class="btn btn-lg btn-accent [--btn-shadow:none] rounded-full float-right">Create</a></h3>
+<div class="card m-3">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>{% trans 'Project' %}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for project in projects %}
+      <tr>
+        <td>
+          <span class="text-lg">{{ project.name }}</span>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

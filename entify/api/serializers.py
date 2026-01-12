@@ -8,7 +8,7 @@ class NodeSerializer(serializers.ModelSerializer):
         model = Node
         fields = [
             'id',
-            'slug',
+            'identifier',
             'name',
             'description',
             'external_ids',
@@ -23,7 +23,7 @@ class NodeSerializer(serializers.ModelSerializer):
     uri = serializers.SerializerMethodField()
 
     def get_uri(self, obj):
-        return f"spacify:{obj.type}:{obj.slug}"
+        return f"spacify:{obj.type}:{obj.identifier}"
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

@@ -19,6 +19,6 @@ from django.urls import path, include, re_path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("accounts/", include("django.contrib.auth.urls")),
     path('entify/', include('entify.urls')),
-    re_path(r'^oauth2/', include('provider.oauth2.urls', namespace = 'oauth2')),
 ]

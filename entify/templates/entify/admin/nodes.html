@@ -1,0 +1,78 @@
+{% extends "entify/admin/base.html" %}
+{% load i18n %}
+{% load humanize %}
+{% block page %}
+<script>
+  function copyToClipboard(event) {
+    var target = event.target
+    var uri = target.dataset.uri
+    navigator.clipboard.writeText(uri).then(() => {
+      var $div = $('<div class="toast toast-center"><div class="alert alert-neutral bg-black text-white"><span>Copied to clipboard</span></div></div>')
+      var node = $('body').append($div)
+      setTimeout(() => $(document).remove($div), 1000)
+    })
+  }
+</script>
+<div class="jumbotron bg-base-300 min-h-50" style="margin-bottom: 50pt">
+  <div class="container pt-15 flex flex-col gap-5 items-stretch">
+    <h1 class="text-5xl font-bold">Nodes</h1>
+    <form method="GET" class="flex flex-row gap-3">
+      <div class="flex flex-row flex-1">
+        <select name="type" class="select">
+          <option value="">{% trans 'All node types' %}</option>
+          {% for type in types %}
+          <option {% if type == type.slug %}selected{% endif %} value="{{ type.slug }}">{{ type.name }}</option>
+          {% endfor %}
+        </select>
+        <input type="search" class="input flex-1" placeholder="Try a URI, name or title" name="q">
+    
+      </div>
+      <button type="submit" class="btn btn-primary">{% trans 'Search' %}</button>
+    </form>
+  </div>
+</div>
+<div class="container">
+  <h3 class="m-3 text-xl fixed" style="right: 20pt; bottom: 20pt; z-index: 99"><a href="{% url 'create_node' %}" class="btn btn-xl btn-neutral float-right"><i style="font-size: 20pt" class="ph ph-plus font-bold"></i>Register stream</a></h3>
+  <div class="card m-3">
+    {% if object_list %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>{% trans 'Name' %}</th>
+          <th>{% trans 'Type' %}</th>
+          <th>{% trans 'Entity uri' %}</th>
+          <th>{% trans 'Identifier' %}</th>
+          <th><i class="ph ph-menu"></i></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for node in object_list %}
+        <tr>
+          <td> 
+            {{ node.name }} 
+          </td>
+          <td>
+            {{ node.type}}
+          </td>
+          <td>
+            <button data-uri="{{ node.uri }}" onclick="copyToClipboard(event)" class="p-0 btn btn-plain bg-transparent hover:bg-neutral-300 border-none">{{ node.uri }} <i class="ph ph-copy" style="font-size: 22pt"></i></button>
+          </td>
+          <td>
+            <button data-uri="{{ node.identifier }}" onclick="copyToClipboard(event)" class="p-0 btn btn-plain bg-transparent hover:bg-neutral-300 border-none">{{ node.identifier }} <i class="ph ph-copy" style="font-size: 22pt"></i></button>
+          </td>
+          <td style="text-align: right">
+            <button class="ph ph-dots-three"></button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="hero bg-neutral-100 justify-center flex flex-col gap-3" style="aspect-ratio: 16/3">
+      <i class="badge badge-primary ph ph-clock" style="aspect-ratio: 1/1 !important; height: 32pt; width: 32pt; border-radius: 50pt; font-size: 18pt"></i>
+      <h1 class="text-3xl font-bold">Hours will be shown here</h1>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

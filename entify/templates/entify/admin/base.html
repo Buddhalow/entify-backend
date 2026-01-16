@@ -1,0 +1,24 @@
+{% extends "entify/base.html" %}
+{% load i18n %}
+{% block body %}
+<div class="drawer md:drawer-open lg:drawer-open">
+  <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content" >
+    <!-- Navbar -->
+    <nav class="navbar flex flex-row bg-black text-white w-full gap-1 p-3">
+      <label for="my-drawer-4" aria-label="open sidebar" class="btn btn-square btn-ghost text-white">
+        <i class="ph ph-house" style="font-size: 28pt"></i>
+      </label>
+      <div style="flex: 1"></div>
+      <div class="navbar-center gap-1">
+      <a href="{% url 'nodes' %}">Overview</a>
+      </div>
+      <div style="flex: 1"></div>
+      <i class="ph ph-info" style="font-size: 28pt"></i>
+    </nav>
+    <!-- Page content here -->
+    {% block page %}{% endblock %}
+  </div>
+
+</div>
+{% endblock %}

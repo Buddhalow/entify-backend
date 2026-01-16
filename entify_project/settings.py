@@ -58,11 +58,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'rest_framework',
     'rest_framework_extensions',
     'rest_framework_api_key',
     'drf_spectacular',
-    'oauth2_provider',
     'entify'
 ]
 
@@ -145,12 +145,11 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'django.contrib.auth'
     ],
     'DEFAULT_PARSER_CLASSES': [
         # Any other parsers
     ],
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'JSON_UNDERSCOREIZE': {
         'no_underscore_before_number': True,
     },

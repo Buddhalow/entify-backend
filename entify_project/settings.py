@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'rest_framework_extensions',
     'rest_framework_api_key',
     'drf_spectacular',
+    'dashmin',
     'entify'
 ]
 
@@ -85,6 +86,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'dashmin.context_processors.dashmin',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',

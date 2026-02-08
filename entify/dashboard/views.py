@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from entify.forms import NodeForm
 
-from .models import Node, Type
+from entify.models import Node, Type
 
 
 class CreateNodeView(LoginRequiredMixin, View):
@@ -16,7 +16,7 @@ class CreateNodeView(LoginRequiredMixin, View):
         
         return render(
             request,
-            'entify/admin/node/overview.html',
+            'entify/node/overview.html',
             {
                 'form': form
             }
@@ -42,7 +42,7 @@ class NodeView(LoginRequiredMixin, View):
         
         return render(
             request,
-            'entify/admin/node/overview.html',
+            'entify/node/overview.html',
             {
                 'form': form,
                 'node': node
@@ -52,23 +52,32 @@ class NodeView(LoginRequiredMixin, View):
 
 class NodeListView(LoginRequiredMixin, ListView):
     model = Node
-    template_name = "entify/admin/nodes.html"
+    template_name = "entify/node/index.html"
     queryset = Node.objects.all()
 
     def get_context_data(self, **kwargs):
         ret = super().get_context_data(**kwargs)
-        type = self.request.GET.get('type')
+
+        ret['has_filter'] = False
 
         ret['types'] = Type.objects.order_by('name')
-        ret['type'] = type
+        if node_type := self.request.GET.get('type'):
+            ret['type'] = node_type
+
+        if q := self.request.GET.get('q'):
+            ret['q'] = q
+            ret['has_filter'] = True
 
         return ret
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        if type := self.request.GET.get('type'):
+
+        if node_type := self.request.GET.get('type'):
             queryset = queryset.filter(
-                slug=type
+                slug=node_type
             )
+
+        queryset = queryset.order_by('-created')
 
         return queryset

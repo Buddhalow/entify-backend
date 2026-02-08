@@ -24,8 +24,10 @@ class UpsertNodeAPIView(APIView):
         node_type = body.get('type')
         name = body.get('name')
         slug = body.get('slug', None)
+        id = body.get('id')
         
         node, created = Node.objects.update_or_create(
+            id=id,
             type=node_type,
             name=name,
             slug=slug

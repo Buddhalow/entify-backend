@@ -5,3 +5,4 @@ __pyc__/
 *.tmp
 tmp/
 .env.development
+.env

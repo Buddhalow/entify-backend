@@ -2,13 +2,18 @@
 {% load i18n %}
 {% load humanize %}
 {% block list_filters %}
-<select name="type" class="select">
-  <label for="type">Node type</label>
-  <option value="">{% trans 'All node types' %}</option>
-  {% for type in types %}
-  <option {% if type == type.slug %}selected{% endif %} value="{{ type.slug }}">{{ type.name }}</option>
-  {% endfor %}
-</select>
+<div class="field">
+  <div class="control">
+    <div class="select">
+      <select name="type">
+        <option value="">{% trans 'All node types' %}</option>
+        {% for type in types %}
+        <option {% if type == type.slug %}selected{% endif %} value="{{ type.slug }}">{{ type.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+</div>
 {% endblock %}
 {% block script %}
 <script>
@@ -16,24 +21,23 @@
     var target = event.target
     var uri = target.dataset.uri
     navigator.clipboard.writeText(uri).then(() => {
-      var $div = $('<div class="toast toast-center"><div class="alert alert-neutral bg-black text-white"><span>Copied to clipboard</span></div></div>')
-      var node = $('body').append($div)
-      setTimeout(() => $(document).remove($div), 1000)
+      var $div = $('<div class="notification is-dark" style="position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:9999"><span>Copied to clipboard</span></div>')
+      $('body').append($div)
+      setTimeout(() => $div.remove(), 1000)
     })
   }
 </script>
 {% endblock %}
-{% block actions %}
-<a href="{% url 'create_node' %}" class="btn btn-xl btn-neutral float-right"><i style="font-size: 20pt" class="ph ph-plus font-bold"></i>Register stream</a>
+{% block view_actions %}
+<a href="{% url 'create_node' %}" class="button is-primary is-pulled-right"><i style="font-size: 16pt" class="ph ph-plus"></i>{% trans 'Register node' %}</a>
 {% endblock %}
 {% block view_title %}{% trans 'Nodes' %}{% endblock %}
 {% block page %}
-<div class="">
-
-  <h3 class="m-3 text-xl fixed" style="right: 20pt; bottom: 20pt; z-index: 99"></h3>
-  <div class="card m-3">
+<div>
+  <h3 class="is-size-5" style="position:fixed; right: 20pt; bottom: 20pt; z-index: 99"></h3>
+  <div class=" m-3">
     {% if object_list %}
-    <table class="table">
+    <table class=" is-fullwidth is-hoverable">
       <thead>
         <tr>
           <th>{% trans 'Name' %}</th>
@@ -47,16 +51,16 @@
         {% for node in object_list %}
         <tr>
           <td> 
-            {{ node.name }} 
+            <a href="{% url 'node_overview' node.identifier %}">{{ node.name }}</a>
           </td>
           <td>
             {{ node.type}}
           </td>
           <td>
-            <button data-uri="{{ node.uri }}" onclick="copyToClipboard(event)" class="p-0 btn btn-plain bg-transparent hover:bg-neutral-300 border-none">{{ node.uri }} <i class="ph ph-copy" style="font-size: 22pt"></i></button>
+            <button data-uri="{{ node.uri }}" onclick="copyToClipboard(event)" class="button is-ghost" style="border:none">{{ node.uri }} <i class="ph ph-copy" style="font-size: 22pt"></i></button>
           </td>
           <td>
-            <button data-uri="{{ node.identifier }}" onclick="copyToClipboard(event)" class="p-0 btn btn-plain bg-transparent hover:bg-neutral-300 border-none">{{ node.identifier }} <i class="ph ph-copy" style="font-size: 22pt"></i></button>
+            <button data-uri="{{ node.identifier }}" onclick="copyToClipboard(event)" class="button is-ghost" style="border:none">{{ node.identifier }} <i class="ph ph-copy" style="font-size: 22pt"></i></button>
           </td>
           <td style="text-align: right">
             <button class="ph ph-dots-three"></button>
@@ -66,9 +70,9 @@
       </tbody>
     </table>
     {% else %}
-    <div class="hero bg-neutral-100 justify-center flex flex-col gap-3" style="aspect-ratio: 16/3">
-      <i class="badge badge-primary ph ph-clock" style="aspect-ratio: 1/1 !important; height: 32pt; width: 32pt; border-radius: 50pt; font-size: 18pt"></i>
-      <h1 class="text-3xl font-bold">Hours will be shown here</h1>
+    <div class="hero has-background-light is-flex is-flex-direction-column is-justify-content-center is-align-items-center" style="aspect-ratio: 16/3">
+      <span class="tag is-primary is-rounded" style="height: 32pt; width: 32pt; font-size: 18pt"><i class="ph ph-clock"></i></span>
+      <h1 class="is-size-3 has-text-weight-bold">Hours will be shown here</h1>
     </div>
     {% endif %}
   </div>

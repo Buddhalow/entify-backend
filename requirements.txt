@@ -1,4 +1,5 @@
 asgiref==3.11.0
+crispy-bulma
 attrs==25.4.0
 certifi==2025.11.12
 cffi==2.0.0

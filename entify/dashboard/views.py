@@ -16,7 +16,7 @@ class CreateNodeView(LoginRequiredMixin, View):
         
         return render(
             request,
-            'entify/node/overview.html',
+            'entify/node/[nodeId]/overview.html',
             {
                 'form': form
             }
@@ -29,24 +29,34 @@ class CreateNodeView(LoginRequiredMixin, View):
             form.save()
         
         return redirect(
-            'nodes', node_id=form.instance.slug
+            'nodes'
         )
 
 
 class NodeView(LoginRequiredMixin, View):
-    def get(self, request, node_id):
+    def get(self, request, node_id=None):
         node = Node.objects.get(
-            slug=node_id
+            identifier=node_id
         )
         form = NodeForm(instance=node)
         
         return render(
             request,
-            'entify/node/overview.html',
+            'entify/node/[nodeId]/overview.html',
             {
                 'form': form,
                 'node': node
             }
+        )
+
+    def post(self, request, node_id=None):
+        form = NodeForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+        
+        return redirect(
+            'nodes'
         )
 
 

@@ -15,22 +15,23 @@ class NodeViewSet(ModelViewSet):
     serializer_class = NodeSerializer
 
 
-
 class UpsertNodeAPIView(APIView):
     permission_classes = [IsAuthenticated | HasAPIKey]
 
-    def get(self, request, type=None, slug=None):
+    def post(self, request):
         body = json.loads(request.body)
         node_type = body.get('type')
         name = body.get('name')
         slug = body.get('slug', None)
-        id = body.get('id')
-        
-        node, created = Node.objects.update_or_create(
-            id=id,
+        node_id = body.get('id')
+        attributes = body.get('attributes', {})
+
+        node, created = Node.objects.get_or_create(
+            id=node_id,
             type=node_type,
             name=name,
-            slug=slug
+            slug=slug,
+            attributes=attributes
         )
         return Response(
             instance=node

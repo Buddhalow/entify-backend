@@ -1,0 +1,28 @@
+{% extends "entify/base.html" %}
+{% load i18n %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% block page %}
+<form method="post" class="wizard has-background-white" class="box">
+  {% csrf_token %}
+  <div class="wizard-header">
+    <a><i class="ph ph-x"></i></a>
+    <div style="flex: 1"></div>
+    <h3>{% trans model.name %}</h3>
+    <div style="flex: 1"></div>
+  </div>
+  <div class="wizard-content">
+    <div class="columns">
+      <div class="column">
+        {{ form|crispy }}
+      </div>
+    </div>
+  </div>
+  <div class="wizard-footer">
+    <a href="{% url 'nodes' %}" class="button is-outlined">{% trans 'Cancel' %}</a>
+    <div style="flex: 1"></div>
+    <button type="submit" class="button is-primary">{% trans 'Create' %}</button>
+  </div>
+
+</form>
+{% endblock %}
